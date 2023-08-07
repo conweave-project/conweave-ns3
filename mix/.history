@@ -1,0 +1,33 @@
+date,id,ccmode,lbmode,cwh_tx_expiry_time,cwh_extra_reply_deadline,cwh_path_pause_time,cwh_extra_voq_flush_time,cwh_default_voq_waiting_time,pfc,irn,has_win,var_win,topo,bw,cdf,load,time
+08/06/23,625684030,1,6,1000,4,16,64,400,1,0,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/625684030/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/625684030/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/625684030/config.txt'
+
+08/06/23,907843760,1,3,1000,4,16,64,400,1,0,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/907843760/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/907843760/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/907843760/config.txt'
+
+08/06/23,207663960,1,0,1000,4,16,64,400,1,0,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/207663960/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/207663960/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/207663960/config.txt'
+
+08/06/23,338999884,1,9,300,4,16,16,200,1,0,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/338999884/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/338999884/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/338999884/config.txt'
+
+08/06/23,904941597,1,0,1000,4,16,64,400,0,1,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/904941597/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/904941597/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/904941597/config.txt'
+
+08/06/23,442697678,1,6,1000,4,16,64,400,0,1,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/442697678/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/442697678/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/442697678/config.txt'
+
+08/06/23,257060612,1,3,1000,4,16,64,400,0,1,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/257060612/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/257060612/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/257060612/config.txt'
+
+08/06/23,689215308,1,9,300,4,16,16,200,0,1,0,0,leaf_spine_128_100G_OS2,100,AliStorage2019,50,0.1
+./waf --run 'scratch/network-load-balance /home/mason/ns-conweave-3.29/ns-3.29/mix/output/689215308/config.txt' > /home/mason/ns-conweave-3.29/ns-3.29/mix/output/689215308/config.log 2>&1
+./waf --run 'scratch/network-load-balance' --command-template='gdb --args %s /home/mason/ns-conweave-3.29/ns-3.29/mix/output/689215308/config.txt'
+
