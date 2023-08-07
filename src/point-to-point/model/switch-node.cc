@@ -12,8 +12,6 @@
 #include "ns3/packet.h"
 #include "ns3/pause-header.h"
 #include "ns3/settings.h"
-#include "ns3/slb-routing.h"
-#include "ns3/slbp4-routing.h"
 #include "ns3/uinteger.h"
 #include "ppp-header.h"
 #include "qbb-net-device.h"
