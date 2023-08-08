@@ -2,7 +2,62 @@
 
 This is a Github repository for the SIGCOMM'23 paper "[Network Load Balancing with In-network Reordering Support for RDMA](https://doi.org/10.1145/3603269.3604849)".
 
-## Guide
+## Guide Using Docker
+
+#### Docker Engine
+For Ubuntu, following the installation guide [here](https://docs.docker.com/engine/install/ubuntu/) and make sure to apply the necessary post-install [steps](https://docs.docker.com/engine/install/linux-postinstall/).
+
+Eventually, you should be able to launch the `hello-world` Docker container without the `sudo` command: `docker run hello-world`.
+
+### 0. Prerequisites
+First, you do all these:
+
+```shell
+wget https://www.nsnam.org/releases/ns-allinone-3.29.tar.bz2
+tar -xvf ns-allinone-3.29.tar.bz2
+cd ns-allinone-3.29
+rm -rf ns-3.29
+git clone https://github.com/conweave-project/conweave-ns3.git ns-3.29
+```
+
+### 1. Create a Dockerfile
+Here, `ns-allinone-3.29` will be your root directory.
+
+Create a Dockerfile at the root directory with the following:
+```shell
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt install -y gnuplot python python3 python3-pip build-essential libgtk-3-0 bzip2 wget git && rm -rf /var/lib/apt/lists/* && pip3 install install numpy matplotlib cycler
+WORKDIR /root
+```
+
+Then, you do this: 
+```shell
+docker build -t cw-sim:sigcomm23ae .
+```
+
+Once the container is built, do this from the root directory:
+```shell
+docker run -it -v $(pwd):/root cw-sim:sigcomm23ae bash -c "cd ns-3.29; ./waf configure --build-profile=optimized; ./waf"
+```
+
+This should build everything necessary for the simulator.
+
+### 2. Run
+One can always just run the container: 
+```shell
+docker run -it -v $(pwd):/root cw-sim:sigcomm23ae
+```
+
+Then, manually `cd ns-3.29`, and do `./autorun.sh` step by step following your README.
+That will run `0.1 second` simulation of 8 experiments which are a part of Figure 12 and 13 in the paper.
+In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
+To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`.
+
+
+
+## Guide To Run NS-3 Locally
 ### 0. Prerequisites
 We tested the simulator on Ubuntu 20.04, but latest versions of Ubuntu should also work.
 ```shell
