@@ -2,14 +2,16 @@
 
 This is a Github repository for the SIGCOMM'23 paper "[Network Load Balancing with In-network Reordering Support for RDMA](https://doi.org/10.1145/3603269.3604849)".
 
-## Guide Using Docker
+We describe how to run this repository either on docker or using your local machine with `ubuntu:20.04`. 
+
+
+## Run with Docker
 
 #### Docker Engine
 For Ubuntu, following the installation guide [here](https://docs.docker.com/engine/install/ubuntu/) and make sure to apply the necessary post-install [steps](https://docs.docker.com/engine/install/linux-postinstall/).
-
 Eventually, you should be able to launch the `hello-world` Docker container without the `sudo` command: `docker run hello-world`.
 
-### 0. Prerequisites
+#### 0. Prerequisites
 First, you do all these:
 
 ```shell
@@ -20,7 +22,7 @@ rm -rf ns-3.29
 git clone https://github.com/conweave-project/conweave-ns3.git ns-3.29
 ```
 
-### 1. Create a Dockerfile
+#### 1. Create a Dockerfile
 Here, `ns-allinone-3.29` will be your root directory.
 
 Create a Dockerfile at the root directory with the following:
@@ -44,7 +46,7 @@ docker run -it -v $(pwd):/root cw-sim:sigcomm23ae bash -c "cd ns-3.29; ./waf con
 
 This should build everything necessary for the simulator.
 
-### 2. Run
+#### 2. Run
 One can always just run the container: 
 ```shell
 docker run -it -v $(pwd):/root cw-sim:sigcomm23ae
@@ -57,8 +59,8 @@ To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`
 
 
 
-## Guide To Run NS-3 Locally
-### 0. Prerequisites
+## Run NS-3 on Ubuntu 20.04
+#### 0. Prerequisites
 We tested the simulator on Ubuntu 20.04, but latest versions of Ubuntu should also work.
 ```shell
 sudo apt install build-essential python3 libgtk-3-0 bzip2
@@ -69,7 +71,7 @@ python3 -m pip install numpy matplotlib cycler
 ```
 
 
-### 1. Configure & Build
+#### 1. Configure & Build
 ```shell
 wget https://www.nsnam.org/releases/ns-allinone-3.29.tar.bz2
 tar -xvf ns-allinone-3.29.tar.bz2
@@ -82,8 +84,8 @@ cd ns-3.29
 ```
 
 
-### 2. Simulation
-#### Run
+#### 2. Simulation
+##### Run
 You can reproduce the simulation results of Figure 12 and 13 (FCT slowdown) by running the script:
 ```shell
 ./autorun.sh
@@ -103,7 +105,7 @@ Then, it runs NS-3 simulation script `./scratch/network-load-balance.cc`.
 Lastly, it runs FCT analyzer `./fctAnalysis.py` and switch resource analyzer `./queueAnalysis.py`. 
 
 
-#### Plot
+##### Plot
 You can easily plot the results using the following command:
 ```shell
 python3 ./analysis/plot_fct.py
@@ -113,23 +115,30 @@ The result figures are located at `./analysis/figures`.
 The script requires input parameters such as `-sT` and `-fT` which indicate the time window to analyze the fct result. 
 By default, it assuems to use `0.1 second` runtime. 
 
-#### Clean up
+##### Clean up
 To clean all data of previous simulation results, you can run the command:
 ```shell
 ./cleanup.sh
 ```
 
-#### Others
-* At `./mix/output`, several raw data is stored such as (1) FCT, (2) PFC, (3) uplink's utility, (3) number of connections, and (5) CNP.
-
+##### Output
+* At `./mix/output`, several raw data is stored such as 
+  * Flow Completion Time (`XXX_out_fct.txt`), 
+  * PFC generation (`XXX_out_pfc.txt`), 
+  * Uplink's utility (`XXX_out_uplink.txt`), 
+  * Number of connections (`XXX_out_conn.txt`), 
+  * Congestion Notification Packet (`XXX_out_cnp.txt`).
+  
 * Each run of simulation creates a repository in `./mix/output` with simulation ID (10-digit number).
 
 * Inside the folder, you can check the simulation config `config.txt` and output log `config.log`. 
 
+* The output files include post-processed files such as CDF results.
+
 * The history of simulations will be recorded in `./mix/.history`. 
 
 
-#### ConWeave Parameter
+#### ConWeave Parameters
 We include ConWeave's parameter values into `./run.py` based on flow control model and topology.  
 
 
