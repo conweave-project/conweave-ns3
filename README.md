@@ -131,6 +131,8 @@ To clean all data of previous simulation results, you can run the command:
   * Uplink's utility (`XXX_out_uplink.txt`), 
   * Number of connections (`XXX_out_conn.txt`), 
   * Congestion Notification Packet (`XXX_out_cnp.txt`).
+  * CDF of number of queues usage per egress port (`XXX_out_voq_per_dst_cdf.txt`).
+  * CDF of total queue memory overhead per switch (`XXX_out_voq_cdf.txt`).
   
 * Each run of simulation creates a repository in `./mix/output` with simulation ID (10-digit number).
 
