@@ -167,7 +167,7 @@ In this simulator, we implemented that behavior in `rdma-hw.cc`.
 
 ## Citation
 If you find this repository useful in your research, please consider citing:
-```shell
+```
 @inproceedings{song2023conweave,
   title={Network Load Balancing with In-network Reordering Support for RDMA},
   author={Song, Cha Hwan and Khooi, Xin Zhe and Joshi, Raj and Choi, Inho and Li, Jialin and Chan, Mun Choon},
@@ -202,41 +202,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-
-<!-- 
-## NS-3 Simulator Structure
-
-## Dependencies
-
-### Ubuntu20.04 LTS on Docker
-'''
-docker run --name llvm_u2004 -dt ubuntu:20.04
-docker ps
-docker run --rm -it ubuntu:20.04 /bin/bash
-docker exec -it ubuntu_20.04 /bin/bash 
-
-adduser {username}
-usermod -aG sudo {username}
-apt update; apt upgrade
-apt install sudo
-
-su {username}
-sudo groupadd docker
-sudo gpasswd -a $USER docker
-
-sudo apt update && sudo apt upgrade
-sudo apt-get install git gcc g++ python python3 python-dev mercurial python-setuptools autoconf cvs bzr unrar cmake gdb valgrind uncrustify tcpdump automake -y
-apt-get install python3-pip
-
-
-sudo apt install openssh-server
-sudo systemctl enable ssh
-sudo systemctl start ssh (it not working, try service ssh start)
-'''
-
-
-### Python3
-'''
-python3 -m pip install numpy plotly==5.10.0 pandas
-python3 -m pip install -U kaleido
-''' -->
