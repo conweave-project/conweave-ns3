@@ -168,7 +168,12 @@ In this simulator, we implemented that behavior in `rdma-hw.cc`.
 ## Citation
 If you find this repository useful in your research, please consider citing:
 ```shell
-TBD
+@inproceedings{song2023conweave,
+  title={Network Load Balancing with In-network Reordering Support for RDMA},
+  author={Song, Cha Hwan and Khooi, Xin Zhe and Joshi, Raj and Choi, Inho and Li, Jialin and Chan, Mun Choon},
+  booktitle={Proceedings of SIGCOMM},
+  year={2023}
+}
 ```
 
 ## Credit
