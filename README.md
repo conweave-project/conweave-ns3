@@ -49,14 +49,16 @@ This should build everything necessary for the simulator.
 #### 2. Run
 One can always just run the container: 
 ```shell
-docker run -it -v $(pwd):/root cw-sim:sigcomm23ae
+docker run -it --name cw-sim -v $(pwd):/root cw-sim:sigcomm23ae 
+cd ns-3.19;
+./autorun.sh
 ```
 
-Then, manually `cd ns-3.19`, and do `./autorun.sh` step by step following your README.
 That will run `0.1 second` simulation of 8 experiments which are a part of Figure 12 and 13 in the paper.
 In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
 To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`.
 
+:exclamation : To run processes in background, use `./autorun.sh > 2>&1 &` instead of `./autorun.sh`.
 
 
 ## Run NS-3 on Ubuntu 20.04
@@ -93,6 +95,7 @@ You can reproduce the simulation results of Figure 12 and 13 (FCT slowdown) by r
 
 In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
 This takes a few hours, and requires 8 CPU cores and 10G RAM.
+Note that we do not run `DRILL` since it takes too much time due to many out-of-order packets.
 
 
 If you want to run the simulation individually, try this command:
@@ -143,7 +146,6 @@ We include ConWeave's parameter values into `./run.py` based on flow control mod
 
 
 ### Simulator Structure
-
 Most implementations of network load balancing are located in the directory `./src/point-to-point/model`.
 
 * `switch-node.h/cc`: Switching logic that includes a default multi-path routing protocol (e.g., ECMP) and DRILL.
