@@ -15,15 +15,15 @@ Eventually, you should be able to launch the `hello-world` Docker container with
 First, you do all these:
 
 ```shell
-wget https://www.nsnam.org/releases/ns-allinone-3.29.tar.bz2
-tar -xvf ns-allinone-3.29.tar.bz2
-cd ns-allinone-3.29
-rm -rf ns-3.29
-git clone https://github.com/conweave-project/conweave-ns3.git ns-3.29
+wget https://www.nsnam.org/releases/ns-allinone-3.19.tar.bz2
+tar -xvf ns-allinone-3.19.tar.bz2
+cd ns-allinone-3.19
+rm -rf ns-3.19
+git clone https://github.com/conweave-project/conweave-ns3.git ns-3.19
 ```
 
 #### 1. Create a Dockerfile
-Here, `ns-allinone-3.29` will be your root directory.
+Here, `ns-allinone-3.19` will be your root directory.
 
 Create a Dockerfile at the root directory with the following:
 ```shell
@@ -41,7 +41,7 @@ docker build -t cw-sim:sigcomm23ae .
 
 Once the container is built, do this from the root directory:
 ```shell
-docker run -it -v $(pwd):/root cw-sim:sigcomm23ae bash -c "cd ns-3.29; ./waf configure --build-profile=optimized; ./waf"
+docker run -it -v $(pwd):/root cw-sim:sigcomm23ae bash -c "cd ns-3.19; ./waf configure --build-profile=optimized; ./waf"
 ```
 
 This should build everything necessary for the simulator.
@@ -52,7 +52,7 @@ One can always just run the container:
 docker run -it -v $(pwd):/root cw-sim:sigcomm23ae
 ```
 
-Then, manually `cd ns-3.29`, and do `./autorun.sh` step by step following your README.
+Then, manually `cd ns-3.19`, and do `./autorun.sh` step by step following your README.
 That will run `0.1 second` simulation of 8 experiments which are a part of Figure 12 and 13 in the paper.
 In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
 To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`.
@@ -73,12 +73,12 @@ python3 -m pip install numpy matplotlib cycler
 
 #### 1. Configure & Build
 ```shell
-wget https://www.nsnam.org/releases/ns-allinone-3.29.tar.bz2
-tar -xvf ns-allinone-3.29.tar.bz2
-cd ns-allinone-3.29
-rm -rf ns-3.29
-git clone https://github.com/conweave-project/conweave-ns3.git ns-3.29
-cd ns-3.29
+wget https://www.nsnam.org/releases/ns-allinone-3.19.tar.bz2
+tar -xvf ns-allinone-3.19.tar.bz2
+cd ns-allinone-3.19
+rm -rf ns-3.19
+git clone https://github.com/conweave-project/conweave-ns3.git ns-3.19
+cd ns-3.19
 ./waf configure --build-profile=optimized
 ./waf
 ```

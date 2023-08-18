@@ -198,13 +198,15 @@ def main():
     # Sanity checks
     if (args.cc == "timely" or args.cc == "hpcc") and args.lb == "conweave":
         raise Exception(
-            "CONFIG ERROR >> ConWeave currently does not support RTT-based protocols. Plz modify its logic accordingly.")
+            "CONFIG ERROR : ConWeave currently does not support RTT-based protocols. Plz modify its logic accordingly.")
     if enabled_irn == 1 and enabled_pfc == 1:
         raise Exception(
-            "CONFIG ERROR >> If IRN is turn-on, then you should turn off PFC (for better perforamnce).")
+            "CONFIG ERROR : If IRN is turn-on, then you should turn off PFC (for better perforamnce).")
     if enabled_irn == 0 and enabled_pfc == 0:
         raise Exception(
-            "CONFIG ERROR >> Either IRN or PFC should be true (at least one).")
+            "CONFIG ERROR : Either IRN or PFC should be true (at least one).")
+    if float(args.simul_time) < 0.005:
+        raise Exception("CONFIG ERROR : Runtime must be larger than 5ms (= warmup interval).")
 
     # sniff number of servers
     with open("config/{topo}.txt".format(topo=args.topo), 'r') as f_topo:
@@ -302,7 +304,7 @@ def main():
         has_win = 1
         var_win = 1
         if enforce_win == 1:
-            print("### Enforced to use window scheme! ###")
+            print("### INFO: Enforced to use window scheme! ###")
 
     # record to history
     simulday = datetime.now().strftime("%m/%d/%y")

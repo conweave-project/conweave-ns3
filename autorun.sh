@@ -23,6 +23,7 @@ cecho "YELLOW" "TIME: ${RUNTIME}"
 cecho "YELLOW" "----------------------------------\n"
 
 # Lossless RDMA
+cecho "GREEN" "Run Lossless RDMA experiments..."
 python3 run.py --lb fecmp --pfc 1 --irn 0 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null & 
 sleep 3
 python3 run.py --lb letflow --pfc 1 --irn 0 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null &
@@ -33,8 +34,9 @@ python3 run.py --lb conweave --pfc 1 --irn 0 --simul_time ${RUNTIME} --netload $
 sleep 0.1
 
 # IRN RDMA
+cecho "GREEN" "Run IRN RDMA experiments..."
 python3 run.py --lb fecmp --pfc 0 --irn 1 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null &
-sleep 0.1
+sleep 0.3
 python3 run.py --lb letflow --pfc 0 --irn 1 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null &
 sleep 0.1
 python3 run.py --lb conga --pfc 0 --irn 1 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null &
@@ -42,4 +44,4 @@ sleep 0.1
 python3 run.py --lb conweave --pfc 0 --irn 1 --simul_time ${RUNTIME} --netload ${NETLOAD} --topo ${TOPOLOGY} 2>&1 > /dev/null &
 sleep 0.1
 
-cecho "GREEN" "Runing in parallel. Check the processors running on background!"
+cecho "GREEN" "Runing all in parallel. Check the processors running on background!"
