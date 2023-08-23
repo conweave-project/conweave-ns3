@@ -58,7 +58,7 @@ That will run `0.1 second` simulation of 8 experiments which are a part of Figur
 In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
 To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`.
 
-:exclamation : To run processes in background, use `./autorun.sh > 2>&1 &` instead of `./autorun.sh`.
+:exclamation: To run processes in background, use `./autorun.sh > 2>&1 &` instead of `./autorun.sh`.
 
 
 ## Run NS-3 on Ubuntu 20.04
