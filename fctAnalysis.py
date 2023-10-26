@@ -65,10 +65,11 @@ if __name__=="__main__":
 
 	# read lines
 	file = "%s"%(output_fct)
-	cmd_absolute = "cat %s"%(file) + " | awk '{if ($6>" + "%d"%time_limit_start + " && $6+$7<" + "%d"%(time_limit_end) + ") print $7/1000, $5}' | sort -n -k 2"
-	output_absolute = subprocess.check_output(cmd_absolute, shell=True)
+	cmd_absolute = "cat %s"%(file) + " | awk '{if ($6>" + "%d"%time_limit_start + " && $6+$7<" + "%d"%(time_limit_end) + ") {print $7/1000, $5} }' | sort -n -k 2"
 	print(cmd_absolute)
-	cmd_slowdown = "cat %s"%(file) + " | awk '{if ($6>" + "%d"%time_limit_start + " && $6+$7<" + "%d"%(time_limit_end) + ") print $7/$8<1?1:$7/$8, $5}' | sort -n -k 2"
+	output_absolute = subprocess.check_output(cmd_absolute, shell=True)
+	cmd_slowdown = "cat %s"%(file) + " | awk '{if ($6>" + "%d"%time_limit_start + " && $6+$7<" + "%d"%(time_limit_end) + ") {print $7/$8<1?1:$7/$8, $5} }' | sort -n -k 2"
+	print(cmd_slowdown)
 	output_slowdown = subprocess.check_output(cmd_slowdown, shell=True)
 
 
