@@ -124,12 +124,7 @@ def size2str(steps):
 
 def main():
     parser = argparse.ArgumentParser(description='Plotting Queue Usage of results')
-    parser.add_argument('-sT', dest='time_limit_begin', action='store', type=int, default=2005000000, help="only consider flows that finish after T, default=2005000000 ns")
-    parser.add_argument('-fT', dest='time_limit_end', action='store', type=int, default=2150000000, help="only consider flows that finish before T, default=2150000000 ns")
-    
     args = parser.parse_args()
-    time_start = args.time_limit_begin
-    time_end = args.time_limit_end
     
     file_dir = getFilePath()
     fig_dir = file_dir + "/figures"

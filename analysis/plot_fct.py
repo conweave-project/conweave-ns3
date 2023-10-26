@@ -165,7 +165,7 @@ def get_steps_from_raw(filename, time_start, time_end, step=5):
 def main():
     parser = argparse.ArgumentParser(description='Plotting FCT of results')
     parser.add_argument('-sT', dest='time_limit_begin', action='store', type=int, default=2005000000, help="only consider flows that finish after T, default=2005000000 ns")
-    parser.add_argument('-fT', dest='time_limit_end', action='store', type=int, default=2150000000, help="only consider flows that finish before T, default=2150000000 ns")
+    parser.add_argument('-fT', dest='time_limit_end', action='store', type=int, default=10000000000, help="only consider flows that finish before T, default=10000000000 ns")
     
     args = parser.parse_args()
     time_start = args.time_limit_begin
@@ -230,7 +230,7 @@ def main():
                 if lb_mode == tgt_lbmode:
                     # plotting
                     fct_slowdown = output_dir + "/{id}/{id}_out_fct.txt".format(id=config_id)
-                    result = get_steps_from_raw(fct_slowdown, int(2.005 * 1000000000), int(3.0 * 1000000000), STEP)
+                    result = get_steps_from_raw(fct_slowdown, int(time_start), int(time_end), STEP)
                     
                     ax.plot(xvals,
                         result["avg"],
@@ -283,7 +283,7 @@ def main():
                 if lb_mode == tgt_lbmode:
                     # plotting
                     fct_slowdown = output_dir + "/{id}/{id}_out_fct.txt".format(id=config_id)
-                    result = get_steps_from_raw(fct_slowdown, int(2.005 * 1000000000), int(3.0 * 1000000000), STEP)
+                    result = get_steps_from_raw(fct_slowdown, int(time_start), int(time_end), STEP)
                     
                     ax.plot(xvals,
                         result["p99"],

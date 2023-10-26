@@ -86,8 +86,14 @@ You can easily plot the results using the following command:
 ```shell
 python3 ./analysis/plot_fct.py
 python3 ./analysis/plot_queue.py
+python3 ./analysis/plot_uplink.py
 ```
+
 See below for details of output results.
+
+
+
+
 ---
 
 ## Run NS-3 on Ubuntu 20.04
@@ -142,21 +148,26 @@ You can easily plot the results using the following command:
 ```shell
 python3 ./analysis/plot_fct.py
 python3 ./analysis/plot_queue.py
+python3 ./analysis/plot_uplink.py
 ```
 
 The outcome figures are located at `./analysis/figures`. 
 1. The script requires input parameters such as `-sT` and `-fT` which indicate the time window to analyze the fct result. 
 By default, it assuems to use `0.1 second` runtime. 
-2. `plot_fct.py` plots the Average and 99-percentile FCT result and give comparisons between frameworks. It includes `5ms` of warm-up and `50ms` of cool-down period in measurements. You can control these numbers in `run.py`:
+2. `plot_fct.py` plots the Average and 99-percentile FCT result and give comparisons between frameworks. It excludes `5ms` of warm-up and `50ms` of cool-down period in measurements. You can control these numbers in `run.py`:
 ```python
 fct_analysis_time_limit_begin = int(flowgen_start_time * 1e9) + int(0.005 * 1e9)  # warmup
 fct_analysistime_limit_end = int(flowgen_stop_time * 1e9) + int(0.05 * 1e9)  # extra term
 ```
-3. `plot_queue.py` plots the CDF of queue volume usage per switch for ConWeave. It includes only `5ms` of warm-up period because cool-down period is likely to under-estimate the overhead. Similarly, you can control this number in `run.py`:
+or, directly put parameters into `plot_fct.py`. Use `-h` for details. 
+3. `plot_queue.py` plots the CDF of queue volume usage per switch for ConWeave. It excludes `5ms` of warm-up period, and cool-down period is not used as it would _underestimate_ the overhead. Similarly, you can control this number in `run.py`:
 ```python
 queue_analysis_time_limit_begin = int(flowgen_start_time * 1e9) + int(0.005 * 1e9)  # warmup
 queue_analysistime_limit_end = int(flowgen_stop_time * 1e9) # no extra term!!
 ```
+or, directly put parameters into `plot_queue.py`. Use `-h` for details. 
+4. `plot_uplink.py` plots the load balance efficiency with ToR uplink utility. By default, it captures uplink throughputs for every `100µs` and measure the variations. It excludes `5ms` of warm-up and `50ms` of cool-down period in measurements. 
+Or, directly put parameters into `plot_uplink.py`. Use `-h` for details. 
 
 ##### Output
 As well as above figures, other results are located at `./mix/output`, such as uplink usage (Figure 14), queue number usage per port (Figure 15), etc.
@@ -175,7 +186,11 @@ As well as above figures, other results are located at `./mix/output`, such as u
 * The output files include post-processed files such as CDF results.
 * The history of simulations will be recorded in `./mix/.history`. 
 
-
+##### Topology
+To evaluate on fat-tree (K=8) topology, you can simply change the `TOPOLOGY` variable in `autorun.sh` to `fat_k8_100G_OS2`:
+```shell
+TOPOLOGY="leaf_spine_128_100G_OS2" # or, fat_k8_100G_OS2
+```
 
 ##### Clean up
 To clean all data of previous simulation results, you can run the command:
