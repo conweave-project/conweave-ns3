@@ -57,9 +57,38 @@ cd ns-3.19;
 That will run `0.1 second` simulation of 8 experiments which are a part of Figure 12 and 13 in the paper.
 In the script, you can easily change the network load (e.g., `50%`), runtime (e.g., `0.1s`), or topology (e.g., `leaf-spine`).
 To plot the FCT graph, see below or refer to the script `./analysis/plot_fct.py`.
+To plot the Queue Usage graph, see below or refer to the script `./analysis/plot_queue.py`.
 
-:exclamation: To run processes in background, use `./autorun.sh > 2>&1 &` instead of `./autorun.sh`.
+:exclamation: **To run processes in background**, use the commands:
+```shell
+docker run -dit --name cw-sim -v $(pwd):/root cw-sim:sigcomm23ae 
+docker exec -it cw-sim /bin/bash
 
+root@252578ceff68:~# cd ns-3.19/
+root@252578ceff68:~/ns-3.19# ./autorun.sh
+Running RDMA Network Load Balancing Simulations (leaf-spine topology)
+
+----------------------------------
+TOPOLOGY: leaf_spine_128_100G_OS2
+NETWORK LOAD: 50
+TIME: 0.1
+----------------------------------
+
+Run Lossless RDMA experiments...
+Run IRN RDMA experiments...
+Runing all in parallel. Check the processors running on background!
+root@252578ceff68:~/ns-3.19# exit
+exit
+```
+
+#### 3. Plot
+You can easily plot the results using the following command:
+```shell
+python3 ./analysis/plot_fct.py
+python3 ./analysis/plot_queue.py
+```
+See below for details of output results.
+---
 
 ## Run NS-3 on Ubuntu 20.04
 #### 0. Prerequisites
@@ -88,7 +117,7 @@ cd ns-3.19
 
 #### 2. Simulation
 ##### Run
-You can reproduce the simulation results of Figure 12 and 13 (FCT slowdown) by running the script:
+You can reproduce the simulation results of Figure 12 and 13 (FCT slowdown), Figure 16 (Queue usage per switch) by running the script:
 ```shell
 ./autorun.sh
 ```
@@ -112,36 +141,47 @@ Lastly, it runs FCT analyzer `./fctAnalysis.py` and switch resource analyzer `./
 You can easily plot the results using the following command:
 ```shell
 python3 ./analysis/plot_fct.py
+python3 ./analysis/plot_queue.py
 ```
 
-The result figures are located at `./analysis/figures`. 
-The script requires input parameters such as `-sT` and `-fT` which indicate the time window to analyze the fct result. 
+The outcome figures are located at `./analysis/figures`. 
+1. The script requires input parameters such as `-sT` and `-fT` which indicate the time window to analyze the fct result. 
 By default, it assuems to use `0.1 second` runtime. 
+2. `plot_fct.py` plots the Average and 99-percentile FCT result and give comparisons between frameworks. It includes `5ms` of warm-up and `50ms` of cool-down period in measurements. You can control these numbers in `run.py`:
+```python
+fct_analysis_time_limit_begin = int(flowgen_start_time * 1e9) + int(0.005 * 1e9)  # warmup
+fct_analysistime_limit_end = int(flowgen_stop_time * 1e9) + int(0.05 * 1e9)  # extra term
+```
+3. `plot_queue.py` plots the CDF of queue volume usage per switch for ConWeave. It includes only `5ms` of warm-up period because cool-down period is likely to under-estimate the overhead. Similarly, you can control this number in `run.py`:
+```python
+queue_analysis_time_limit_begin = int(flowgen_start_time * 1e9) + int(0.005 * 1e9)  # warmup
+queue_analysistime_limit_end = int(flowgen_stop_time * 1e9) # no extra term!!
+```
+
+##### Output
+As well as above figures, other results are located at `./mix/output`, such as uplink usage (Figure 14), queue number usage per port (Figure 15), etc.
+
+* At `./mix/output`, several raw data is stored such as 
+  * Flow Completion Time (`XXX_out_fct.txt`), - Figure 12, 13
+  * PFC generation (`XXX_out_pfc.txt`), 
+  * Uplink's utility (`XXX_out_uplink.txt`), - Figure 14
+  * Number of connections (`XXX_out_conn.txt`), 
+  * Congestion Notification Packet (`XXX_out_cnp.txt`).
+  * CDF of number of queues usage per egress port (`XXX_out_voq_per_dst_cdf.txt`). - Figure 15 
+  * CDF of total queue memory overhead per switch (`XXX_out_voq_cdf.txt`). - Figure 16
+  
+* Each run of simulation creates a repository in `./mix/output` with simulation ID (10-digit number).
+* Inside the folder, you can check the simulation config `config.txt` and output log `config.log`. 
+* The output files include post-processed files such as CDF results.
+* The history of simulations will be recorded in `./mix/.history`. 
+
+
 
 ##### Clean up
 To clean all data of previous simulation results, you can run the command:
 ```shell
 ./cleanup.sh
 ```
-
-##### Output
-* At `./mix/output`, several raw data is stored such as 
-  * Flow Completion Time (`XXX_out_fct.txt`), 
-  * PFC generation (`XXX_out_pfc.txt`), 
-  * Uplink's utility (`XXX_out_uplink.txt`), 
-  * Number of connections (`XXX_out_conn.txt`), 
-  * Congestion Notification Packet (`XXX_out_cnp.txt`).
-  * CDF of number of queues usage per egress port (`XXX_out_voq_per_dst_cdf.txt`).
-  * CDF of total queue memory overhead per switch (`XXX_out_voq_cdf.txt`).
-  
-* Each run of simulation creates a repository in `./mix/output` with simulation ID (10-digit number).
-
-* Inside the folder, you can check the simulation config `config.txt` and output log `config.log`. 
-
-* The output files include post-processed files such as CDF results.
-
-* The history of simulations will be recorded in `./mix/.history`. 
-
 
 #### ConWeave Parameters
 We include ConWeave's parameter values into `./run.py` based on flow control model and topology.  
