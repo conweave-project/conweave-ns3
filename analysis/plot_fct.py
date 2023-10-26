@@ -124,7 +124,7 @@ def size2str(steps):
 def get_steps_from_raw(filename, time_start, time_end, step=5):
     # time_start = int(2.005 * 1000000000)
     # time_end = int(3.0 * 1000000000) 
-    cmd_slowdown = "cat %s"%(filename)+" | awk '{if ($6>"+"%d"%time_start+" && $6+$7<"+"%d"%(time_end)+")} {slow=$7/$8;print slow<1?1:slow, $5}' | sort -n -k 2"    
+    cmd_slowdown = "cat %s"%(filename)+" | awk '{ if ($6>"+"%d"%time_start+" && $6+$7<"+"%d"%(time_end)+") { slow=$7/$8; print slow<1?1:slow, $5} }' | sort -n -k 2"    
     output_slowdown = subprocess.check_output(cmd_slowdown, shell=True)
     aa = output_slowdown.decode("utf-8").split('\n')[:-2]
     nn = len(aa)
@@ -164,8 +164,8 @@ def get_steps_from_raw(filename, time_start, time_end, step=5):
 
 def main():
     parser = argparse.ArgumentParser(description='Plotting FCT of results')
-    parser.add_argument('-sT', dest='time_limit_begin', action='store', type=int, default=2005000000, help="only consider flows that finish after T, default=2.005*10^9 ns")
-    parser.add_argument('-fT', dest='time_limit_end', action='store', type=int, default=2150000000, help="only consider flows that finish before T, default=100 * 10^9 ns")
+    parser.add_argument('-sT', dest='time_limit_begin', action='store', type=int, default=2005000000, help="only consider flows that finish after T, default=2005000000 ns")
+    parser.add_argument('-fT', dest='time_limit_end', action='store', type=int, default=2150000000, help="only consider flows that finish before T, default=2150000000 ns")
     
     args = parser.parse_args()
     time_start = args.time_limit_begin
@@ -195,7 +195,7 @@ def main():
                     elif encoded_fc == (1, 0):
                         flow_control = "Lossless"
                     else:
-                        exit(1)
+                        continue
                     topo = parsed_line[13]
                     netload = parsed_line[16]
                     key = (topo, netload, flow_control)
